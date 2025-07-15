@@ -9,7 +9,7 @@ function App() {
   if (window.location.hostname!== 'localhost') {
     baseURL = 'http://localhost:5000';
   } else {
-    baseURL = 'https://pdf-generator-5g1hn7wt3-saif-hamdares-projects.vercel.app';
+    baseURL = 'https://pdf-generator-backend.vercel.app';
   }
   
     const [formData, setFormData] = React.useState({
@@ -29,7 +29,7 @@ function App() {
   };
 const createAndDownPDF = () => {
   console.log('server url:', baseURL);
-    axios.post( baseURL+'/api/create-pdf', formData).then(() => axios.get(baseURL+'/api/fetch-pdf', { responseType: 'blob' }))
+    axios.post( baseURL+'/create-pdf', formData).then(() => axios.get(baseURL+'/fetch-pdf', { responseType: 'blob' }))
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
         saveAs(blob, 'receipt.pdf');
