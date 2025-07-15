@@ -1,7 +1,7 @@
 const express = require('express');
 const pdf = require('html-pdf');
 const bodyParser = require('body-parser');
-const PDFTemplate = require('../server/documents/index.js');
+const PDFTemplate = require('../documents/index.js');
 
 const app = express();
 

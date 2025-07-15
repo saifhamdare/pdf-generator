@@ -6,10 +6,10 @@ import './App.css';
 function App() {
   let baseURL = '';
   console.log('Current hostname:', window.location.hostname);
-  if (window.location.hostname === 'localhost') {
+  if (window.location.hostname!== 'localhost') {
     baseURL = 'http://localhost:5000';
   } else {
-    baseURL = 'https://pdf-generator-backend.vercel.app';
+    baseURL = 'https://pdf-generator-5g1hn7wt3-saif-hamdares-projects.vercel.app';
   }
   
     const [formData, setFormData] = React.useState({
