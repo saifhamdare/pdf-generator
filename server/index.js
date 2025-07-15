@@ -7,7 +7,7 @@ const PDFTemplate = require('./documents/index.js');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Add this custom CORS middleware for all responses
+// Custom CORS middleware at the very top
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // post route to create PDF
