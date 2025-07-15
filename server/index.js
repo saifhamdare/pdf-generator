@@ -18,13 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors({
-  origin: [
-    'https://pdf-generator-frontend.netlify.app',
-    // 'https://localhost:3000',
-    'http://localhost:3000',
-  ]
-}));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // post route to create PDF
