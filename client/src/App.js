@@ -36,7 +36,7 @@ const createAndDownPDF = () => {
   if (window.location.hostname === 'localhost') {
     baseURL = 'http://localhost:5000';
   } else {
-    baseURL = 'https://pdf-generator-backend.vercel.app';
+    baseURL = 'https://pdf-generator-backend.vercel.app/api';
   }
   console.log('server url:', baseURL);
     axios.post( baseURL+'/generate-pdf', formData,{ responseType: 'blob' })
