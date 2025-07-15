@@ -1,5 +1,6 @@
 const express   = require('express');
-const pdf      = require('html-pdf');
+// const pdf      = require('html-pdf');
+const puppeteer = require('puppeteer');
 const cors     = require('cors');
 const bodyParser      = require('body-parser');
 const PDFTemplate = require('./documents/index.js');
@@ -21,24 +22,28 @@ app.use((req, res, next) => {
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.post('/generate-pdf', (req, res) => {
+app.post('/generate-pdf', async (req, res) => {
   const html = PDFTemplate(req.body);
 
-  pdf.create(html, {}).toBuffer((err, buffer) => {
-    if (err) {
-      console.error('Error generating PDF:', err);
-      return res.status(500).send('Error generating PDF');
-    }
+  try {
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+    const pdfBuffer = await page.pdf({ format: 'A4' });
+    await browser.close();
 
-    // Set headers so the browser downloads it
     res.set({
       'Content-Type': 'application/pdf',
       'Content-Disposition': 'attachment; filename=payslip.pdf',
-      'Content-Length': buffer.length
+      'Content-Length': pdfBuffer.length,
     });
-
-    res.send(buffer);
-  });
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error('PDF generation failed:', error);
+    res.status(500).send('Error generating PDF');
+  }
 });
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

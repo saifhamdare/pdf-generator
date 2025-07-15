@@ -4,13 +4,7 @@ import {saveAs} from 'file-saver';
 import './App.css';
 
 function App() {
-  let baseURL = '';
-  console.log('Current hostname:', window.location.hostname);
-  if (window.location.hostname === 'localhost') {
-    baseURL = 'http://localhost:5000';
-  } else {
-    baseURL = 'https://pdf-generator-backend.vercel.app';
-  }
+
   
     const [formData, setFormData] = React.useState({
     employeeName: '',
@@ -37,11 +31,18 @@ function App() {
   
   };
 const createAndDownPDF = () => {
+    let baseURL = '';
+  console.log('Current hostname:', window.location.hostname);
+  if (window.location.hostname === 'localhost') {
+    baseURL = 'http://localhost:5000';
+  } else {
+    baseURL = 'https://pdf-generator-backend.vercel.app';
+  }
   console.log('server url:', baseURL);
     axios.post( baseURL+'/generate-pdf', formData,{ responseType: 'blob' })
     .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
-        saveAs(blob, 'receipt.pdf');
+        saveAs(blob, formData.payPeriod+'_slip.pdf');
       })
       .catch((error) => {
         console.error('Error downloading PDF:', error);
