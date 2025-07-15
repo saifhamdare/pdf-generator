@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   let baseURL = '';
   console.log('Current hostname:', window.location.hostname);
-  if (window.location.hostname!== 'localhost') {
+  if (window.location.hostname == 'localhost') {
     baseURL = 'http://localhost:5000';
   } else {
     baseURL = 'https://pdf-generator-backend.vercel.app';
