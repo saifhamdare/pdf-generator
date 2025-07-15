@@ -4,7 +4,15 @@ import {saveAs} from 'file-saver';
 import './App.css';
 
 function App() {
-  const [formData, setFormData] = React.useState({
+  let baseURL = '';
+  console.log('Current hostname:', window.location.hostname);
+  if (window.location.hostname !== 'localhost') {
+    baseURL = 'http://localhost:5000';
+  } else {
+    baseURL = 'https://pdf-generator-backend.vercel.app';
+  }
+  
+    const [formData, setFormData] = React.useState({
     name: '',
     reciptId: 0,
     price1: 0,
@@ -20,7 +28,7 @@ function App() {
   
   };
 const createAndDownPDF = () => {
-    axios.post('/create-pdf', formData).then(() => axios.get('/fetch-pdf', { responseType: 'blob' }))
+    axios.post( baseURL+'/create-pdf', formData).then(() => axios.get(baseURL+'/fetch-pdf', { responseType: 'blob' }))
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
         saveAs(blob, 'receipt.pdf');
