@@ -29,7 +29,7 @@ function App() {
   };
 const createAndDownPDF = () => {
   console.log('server url:', baseURL);
-    axios.post( baseURL+'/create-pdf', formData).then(() => axios.get(baseURL+'/fetch-pdf', { responseType: 'blob' }))
+    axios.post( baseURL+'/api/create-pdf', formData).then(() => axios.get(baseURL+'/api/fetch-pdf', { responseType: 'blob' }))
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
         saveAs(blob, 'receipt.pdf');
