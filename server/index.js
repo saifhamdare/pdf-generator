@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // post route to create PDF
 app.post('/create-pdf', (req, res) => {
+    console.log('Received data:', req.body);
     pdf.create(PDFTemplate(req.body), {}).toFile('result.pdf', (err) => {
         if (err) {
             res.send(Promise.reject()); 
@@ -41,4 +42,7 @@ app.get('/fetch-pdf', (req, res) => {
         }
     });
 })
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 module.exports = app;
