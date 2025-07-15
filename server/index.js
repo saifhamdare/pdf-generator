@@ -21,27 +21,25 @@ app.use((req, res, next) => {
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// post route to create PDF
-app.post('/create-pdf', (req, res) => {
-    console.log('Received data:', req.body);
-    pdf.create(PDFTemplate(req.body), {}).toFile('result.pdf', (err) => {
-        if (err) {
-            res.send(Promise.reject()); 
-            // res.status(500).send('Error generating PDF');
-        }
-         res.send(Promise.resolve('PDF created successfully'));
-     
+app.post('/generate-pdf', (req, res) => {
+  const html = PDFTemplate(req.body);
+
+  pdf.create(html, {}).toBuffer((err, buffer) => {
+    if (err) {
+      console.error('Error generating PDF:', err);
+      return res.status(500).send('Error generating PDF');
+    }
+
+    // Set headers so the browser downloads it
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename=payslip.pdf',
+      'Content-Length': buffer.length
     });
-})
-// get route to download PDF
-app.get('/fetch-pdf', (req, res) => {
-    res.sendFile(`${__dirname}/result.pdf`, (err) => {
-        if (err) {
-            console.error('Error downloading PDF:', err);
-            res.status(500).send('Error downloading PDF');
-        }
-    });
-})
+
+    res.send(buffer);
+  });
+});
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
