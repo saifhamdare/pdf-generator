@@ -7,9 +7,9 @@ function App() {
   let baseURL = '';
   console.log('Current hostname:', window.location.hostname);
   if (window.location.hostname === 'localhost') {
-    baseURL = 'https://pdf-generator-backend.vercel.app';
-  } else {
     baseURL = 'http://localhost:5000';
+  } else {
+    baseURL = 'https://pdf-generator-backend.vercel.app';
   }
   
     const [formData, setFormData] = React.useState({
@@ -28,6 +28,7 @@ function App() {
   
   };
 const createAndDownPDF = () => {
+  console.log('server url:', baseURL);
     axios.post( baseURL+'/create-pdf', formData).then(() => axios.get(baseURL+'/fetch-pdf', { responseType: 'blob' }))
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
