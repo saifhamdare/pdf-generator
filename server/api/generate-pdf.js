@@ -1,18 +1,19 @@
-const puppeteer = require('puppeteer');
-const express = require('express');
-const bodyParser = require('body-parser');
-const PDFTemplate = require('../documents/index.js');
+
+import express from 'express';
+import puppeteer from 'puppeteer';
+import bodyParser from 'body-parser';
+import PDFTemplate from'../documents/index.js';
 
 // Shared handler function
 async function generatePdfHandler(req, res) {
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+     return res.status(200).end();
+    
   }
-
+console.log('Received request to generate PDF:', req.method, req.body);
   if (req.method !== 'POST') {
-    res.status(405).send('Method Not Allowed');
-    return;
+    return res.status(405).send('Method Not Allowed');
+   
   }
 
   try {
@@ -29,18 +30,18 @@ async function generatePdfHandler(req, res) {
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=payslip.pdf');
-    res.status(200).send(pdfBuffer);
+   return  res.status(200).send(pdfBuffer);
   } catch (err) {
     console.error('PDF generation error:', err);
-    res.status(500).send('Failed to generate PDF');
+    return res.status(500).send('Failed to generate PDF');
   }
 }
 
 // 👉 Export handler for Vercel
-module.exports = generatePdfHandler;
+export default generatePdfHandler;
 
 // 👉 If running locally via `node api/generate-pdf.js`
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   const app = express();
   app.use(bodyParser.json());
   app.post('/generate-pdf', generatePdfHandler);

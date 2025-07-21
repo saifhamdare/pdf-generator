@@ -1,4 +1,4 @@
-module.exports  = (data)=>{
+const PDFTemplate  = (data)=>{
   // Function to generate HTML template for the PDF
   console.log('Generating PDF template with data:', data);
 return `
@@ -132,3 +132,4 @@ return `
 `
   
 }
+export default PDFTemplate;
