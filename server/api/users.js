@@ -2,9 +2,10 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid'; // Import uuid for unique IDs
 const router = express.Router();
 let Users = [
-    { id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }
-//   { id: 1, name: 'John Doe', email: 'john@doe.com' },
-//   { id: 2, name: 'Jane Smith', email: 'jane@hoe.com' },
+    { id: 1, name: 'Alice' }, 
+    { id: 2, name: 'Bob' },
+  { id: 4, name: 'John Doe', email: 'john@doe.com' },
+  { id: 3, name: 'Jane Smith', email: 'jane@hoe.com' },
 ];
 
 export default function handler(req, res) {
@@ -27,7 +28,7 @@ export default function handler(req, res) {
   
 
   // Any other method
-  res.status(405).json({ error: 'Method Not Allowed' });
+//   res.status(405).json({ error: 'Method Not Allowed' });
 }
 
 

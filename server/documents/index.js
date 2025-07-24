@@ -1,6 +1,7 @@
 const PDFTemplate  = (data)=>{
   // Function to generate HTML template for the PDF
-  console.log('Generating PDF template with data:', data);
+  console.log('Generating PDF template with data:', data ,typeof data);
+  console.log('Data:', data?.employeeName, data?.employeeId, data?.designation, data?.department, data?.payslipNumber, data?.payPeriod, data?.basicSalary, data?.hra, data?.otherAllowances, data?.deductions, data?.netSalary);
 return `
 <!DOCTYPE html>
 <html lang="en">
