@@ -12,3 +12,4 @@ server/dist/
 
 # .env files
 **/.env
+.vercel

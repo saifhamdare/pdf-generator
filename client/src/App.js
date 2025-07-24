@@ -34,7 +34,7 @@ const createAndDownPDF = () => {
     let baseURL = '';
   console.log('Current hostname:', window.location.hostname);
   if (window.location.hostname === 'localhost') {
-    baseURL = 'http://localhost:5000';
+    baseURL = 'http://localhost:3000';
   } else {
     baseURL = 'https://pdf-generator-backend.vercel.app/api';
   }
