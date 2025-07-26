@@ -21,7 +21,7 @@ await page.setViewport({width: 1080, height: 1024});
 await page.setContent(html)
 
     const pdfBuffer =await page.pdf({
-  path: 'test.pdf',
+  path: 'payslip.pdf',
   format: 'A4',
   margin: {
         top: "20px",
