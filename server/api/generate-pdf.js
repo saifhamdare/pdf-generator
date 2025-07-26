@@ -12,7 +12,9 @@ export default async function handler(req, res) {
 
   try {
     const html = PDFTemplate(req.body); // Should return full HTML string
-const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({
+   headless: true,
+});
 const page = await browser.newPage();
 await page.setViewport({width: 1080, height: 1024});
 
