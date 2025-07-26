@@ -20,7 +20,7 @@ await page.setViewport({width: 1080, height: 1024});
 
 await page.setContent(html)
 
-    const pdfBuffer =await page.pdf({
+    const pdfBuffer =Buffer.from(await page.pdf({
   path: 'payslip.pdf',
   format: 'A4',
   margin: {
@@ -29,10 +29,10 @@ await page.setContent(html)
         right: "20px",
         bottom: "20px"
   }    
-});
+}));
      res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=payslip.pdf');
-    return res.status(200).send(pdfBuffer); // Send the PDF buffer as response
+    return res.status(200).download(pdfBuffer); // Send the PDF buffer as response
 
   } catch (err) {
     console.error('PDF generation error:', err);
